@@ -91,7 +91,7 @@ export default function TestQuestion({}: TestQuestionProps) {
     }
   }, [userTestAnswers, currentPersonalityTestIndex, isSubmitting, handleSeeResultButtonClick]);
 
-  async function handleSeeResultButtonClick() {
+  const handleSeeResultButtonClick = useCallback(async () => {
     setIsSubmitting(true);
 
     const timestamp = Date.now();
@@ -135,7 +135,7 @@ export default function TestQuestion({}: TestQuestionProps) {
     } finally {
       setIsSubmitting(false);
     }
-  }
+  }, [router, toast, userTestAnswers, setUserTestAnswers, isSubmitting]);
 
   return (
     <Flex

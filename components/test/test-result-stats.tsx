@@ -51,6 +51,8 @@ function DimensionStats({ title, typeOne, typeTwo, testResult, icon, colorScheme
   const bgColor = useColorModeValue(`${colorScheme}.50`, `${colorScheme}.900`);
   const borderColor = useColorModeValue(`${colorScheme}.200`, `${colorScheme}.700`);
   const accentColor = useColorModeValue(`${colorScheme}.500`, `${colorScheme}.400`);
+const progressBarBg = useColorModeValue("gray.100", "gray.700");
+const descriptionBg = useColorModeValue("white", "gray.800");
 
   const personalityOne = personalityClasses.find(p => p.type === typeOne);
   const personalityTwo = personalityClasses.find(p => p.type === typeTwo);
@@ -193,7 +195,7 @@ function DimensionStats({ title, typeOne, typeTwo, testResult, icon, colorScheme
             colorScheme={colorScheme}
             size="lg"
             borderRadius="full"
-            bg={useColorModeValue("gray.100", "gray.700")}
+            bg={progressBarBg}
             sx={{
               "& > div": {
                 transition: "width 1.2s ease-in-out",
@@ -205,7 +207,7 @@ function DimensionStats({ title, typeOne, typeTwo, testResult, icon, colorScheme
         {/* Description */}
         <Box
           p={3}
-          bg={useColorModeValue("white", "gray.800")}
+          bg={descriptionBg}
           borderRadius="lg"
           border="1px solid"
           borderColor={borderColor}
@@ -227,8 +229,19 @@ function DimensionStats({ title, typeOne, typeTwo, testResult, icon, colorScheme
   );
 }
 
-export default function TestResultStats(props: TestResultStatsProps) {
+export default function TestResultStats({ testResult }: TestResultStatsProps) {
   const bgColor = useColorModeValue("background.secondary", "background.tertiary");
+  const gray200 = useColorModeValue("gray.200", "gray.700");
+
+  // Define color mode values for statsData outside the array
+  const blueColor = useColorModeValue("blue.500", "blue.300");
+  const purpleColor = useColorModeValue("purple.500", "purple.300");
+  const greenColor = useColorModeValue("green.500", "green.300");
+  const orangeColor = useColorModeValue("orange.500", "orange.300");
+  const redColor = useColorModeValue("red.500", "red.300");
+  const pinkColor = useColorModeValue("pink.500", "pink.300");
+  const tealColor = useColorModeValue("teal.500", "teal.300");
+  const cyanColor = useColorModeValue("cyan.500", "cyan.300");
 
   const dimensions = [
     {
@@ -276,7 +289,7 @@ export default function TestResultStats(props: TestResultStatsProps) {
       p={6}
       boxShadow="lg"
       border="1px solid"
-      borderColor={useColorModeValue("gray.200", "gray.700")}
+      borderColor={gray200}
     >
       {/* Header */}
       <VStack spacing={4} align="center" mb={8}>
@@ -317,7 +330,7 @@ export default function TestResultStats(props: TestResultStatsProps) {
             title={dimension.title}
             typeOne={dimension.typeOne}
             typeTwo={dimension.typeTwo}
-            testResult={props.testResult}
+            testResult={testResult}
             icon={dimension.icon}
             colorScheme={dimension.colorScheme}
           />
@@ -325,11 +338,11 @@ export default function TestResultStats(props: TestResultStatsProps) {
       </SimpleGrid>
 
       {/* Footer */}
-      <Box mt={8} pt={6} borderTop="1px solid" borderColor={useColorModeValue("gray.200", "gray.700")}>
+      <Box mt={8} pt={6} borderTop="1px solid" borderColor={gray200}>
         <HStack justify="center" spacing={4}>
           <Icon as={FiTarget} boxSize={4} color="text.secondary" />
           <Text fontSize="sm" color="text.secondary" textAlign="center">
-            Based on {props.testResult.testScores.length} responses • Analysis complete
+            Based on {testResult.testScores.length} responses • Analysis complete
           </Text>
         </HStack>
       </Box>
