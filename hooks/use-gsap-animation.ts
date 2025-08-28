@@ -16,7 +16,7 @@ export interface UseGSAPAnimationOptions {
 
 export interface UseGSAPAnimationReturn {
   animate: (target: gsap.DOMTarget, vars: gsap.TweenVars) => gsap.core.Tween;
-  timeline: (vars?: gsap.core.TimelineVars) => gsap.core.Timeline;
+  timeline: (vars?: gsap.TimelineVars) => gsap.core.Timeline;
   set: (target: gsap.DOMTarget, vars: gsap.TweenVars) => void;
   kill: (target?: gsap.DOMTarget) => void;
   pause: (target?: gsap.DOMTarget) => void;
