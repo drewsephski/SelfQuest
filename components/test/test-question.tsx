@@ -89,7 +89,7 @@ export default function TestQuestion({}: TestQuestionProps) {
     if (allQuestionsAnswered && isOnLastQuestion && !isSubmitting) {
       handleSeeResultButtonClick();
     }
-  }, [userTestAnswers, currentPersonalityTestIndex, isSubmitting]);
+  }, [userTestAnswers, currentPersonalityTestIndex, isSubmitting, handleSeeResultButtonClick]);
 
   async function handleSeeResultButtonClick() {
     setIsSubmitting(true);

@@ -102,6 +102,13 @@ type ChartType = 'radar' | 'area' | 'bar';
 export default function TestResultChart({ testResult }: TestResultChartProps) {
   const [chartType, setChartType] = useState<ChartType>('radar');
 
+  // Chakra UI color mode values
+  const axisTickColor = useColorModeValue("#4A5568", "#A0AEC0");
+  const boxBgColor = useColorModeValue("white", "gray.900");
+  const headingColor = useColorModeValue("gray.800", "white");
+  const textColor = useColorModeValue("gray.600", "gray.300");
+  const summaryBoxBgColor = useColorModeValue("gray.50", "gray.800");
+
   // Calculate personality scores and determine dominant traits
   const data = personalityClasses.map((pc) => {
     const testScoresFiltered = testResult.testScores.filter(
@@ -122,7 +129,7 @@ export default function TestResultChart({ testResult }: TestResultChartProps) {
   const dominantTraits = sortedData.slice(0, 2);
   const isBalanced = Math.abs(dominantTraits[0]?.A - dominantTraits[1]?.A) < 10;
 
-  const renderChart = () => {
+  const renderChart = (tickColor: string) => {
     const commonProps = {
       data,
       margin: { top: 20, right: 30, left: 20, bottom: 60 },
@@ -187,13 +194,13 @@ export default function TestResultChart({ testResult }: TestResultChartProps) {
             <PolarGrid opacity={0.3} />
             <PolarAngleAxis
               dataKey="subject"
-              tick={{ fill: useColorModeValue("#4A5568", "#A0AEC0"), fontSize: 12 }}
+              tick={{ fill: tickColor, fontSize: 12 }}
             />
             <PolarRadiusAxis
               angle={30}
               domain={[0, "dataMax + 10"]}
               tickFormatter={(value) => `${value}%`}
-              tick={{ fill: useColorModeValue("#4A5568", "#A0AEC0"), fontSize: 11 }}
+              tick={{ fill: tickColor, fontSize: 11 }}
             />
             <Tooltip content={<EnhancedTooltip />} />
             <Radar
@@ -210,14 +217,14 @@ export default function TestResultChart({ testResult }: TestResultChartProps) {
   };
 
   return (
-    <Box p={6} width="100%" bg={useColorModeValue("white", "gray.900")} borderRadius="2xl" boxShadow="lg">
+    <Box p={6} width="100%" bg={boxBgColor} borderRadius="2xl" boxShadow="lg">
       <VStack spacing={6} align="stretch">
         {/* Header */}
         <Box textAlign="center">
-          <Heading as="h2" size="lg" mb={2} color={useColorModeValue("gray.800", "white")}>
+          <Heading as="h2" size="lg" mb={2} color={headingColor}>
             Personality Trait Analysis
           </Heading>
-          <ChakraText color={useColorModeValue("gray.600", "gray.300")} mb={4}>
+          <ChakraText color={textColor} mb={4}>
             Your personality profile based on {testResult.testScores.length} responses
           </ChakraText>
 
@@ -271,13 +278,13 @@ export default function TestResultChart({ testResult }: TestResultChartProps) {
         {/* Chart */}
         <Box height="500px" width="100%">
           <ResponsiveContainer width="100%" height="100%">
-            {renderChart()}
+            {renderChart(axisTickColor)}
           </ResponsiveContainer>
         </Box>
 
         {/* Personality Type Summary */}
-        <Box p={4} bg={useColorModeValue("gray.50", "gray.800")} borderRadius="lg">
-          <ChakraText fontSize="sm" color={useColorModeValue("gray.600", "gray.300")} textAlign="center">
+        <Box p={4} bg={summaryBoxBgColor} borderRadius="lg">
+          <ChakraText fontSize="sm" color={textColor} textAlign="center">
             This visualization shows how your answers align with different personality dimensions.
             Higher percentages indicate stronger alignment with that trait.
           </ChakraText>

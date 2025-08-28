@@ -74,7 +74,7 @@ const TechSVGAnimation: React.FC<TechSVGAnimationProps> = ({
   const [animationPhase, setAnimationPhase] = useState<'intro' | 'idle' | 'interact'>('intro');
 
   // Tech-focused blue gradient preset
-  const preset: AnimationPreset = {
+  const preset: AnimationPreset = useMemo(() => ({
     name: 'tech',
     timing: { duration: 2.5, stagger: 0.12, delay: 0.3 },
     physics: { stiffness: 90, damping: 10, mass: 1 },
@@ -87,7 +87,7 @@ const TechSVGAnimation: React.FC<TechSVGAnimationProps> = ({
       gradient2: '#3b82f6',   // Blue 500
       gradient3: '#06b6d4'    // Cyan 500
     }
-  };
+  }), []);
 
   // Smooth mouse tracking with interpolation
   const handleMouseMove = useCallback((event: MouseEvent) => {
