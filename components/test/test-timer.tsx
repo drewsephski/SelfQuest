@@ -6,18 +6,13 @@ import dayjs from "dayjs";
 const SECOND_IN_MILISECONDS = 1000;
 
 export default function TestTimer() {
-  const [elapsedTime, setElapsedTime] = useState<dayjs.Dayjs | null>(null);
+  const [elapsedTime, setElapsedTime] = useState<dayjs.Dayjs>(
+    dayjs().minute(0).second(0).millisecond(0)
+  );
 
   useEffect(() => {
-    if (elapsedTime === null) {
-      setElapsedTime(dayjs().minute(0).second(0).millisecond(0));
-      return;
-    }
-
     const intervalId = setTimeout(() => {
-      setElapsedTime((elapsedTime) =>
-        elapsedTime.add(1000, "ms")
-      );
+      setElapsedTime((prevElapsedTime) => prevElapsedTime.add(1000, "ms"));
     }, SECOND_IN_MILISECONDS);
 
     return () => clearTimeout(intervalId);
@@ -35,13 +30,9 @@ export default function TestTimer() {
     >
       <FiClock size={20} />
       <Text fontWeight="bold">
-        {elapsedTime ? (
-          <>
-            {elapsedTime.minute().toString().padStart(2, "0")} : {elapsedTime.second().toString().padStart(2, "0")}
-          </>
-        ) : (
-          "-- : --"
-        )}
+        <>
+          {elapsedTime.minute().toString().padStart(2, "0")} : {elapsedTime.second().toString().padStart(2, "0")}
+        </>
       </Text>
     </Flex>
   );
