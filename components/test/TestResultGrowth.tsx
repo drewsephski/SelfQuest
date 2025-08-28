@@ -1,9 +1,9 @@
 import { Box, Heading, Text, UnorderedList, ListItem } from '@chakra-ui/react';
-import { PersonalityClass, PersonalityClassGroup } from '../../data/personality-classes';
+import { PersonalityClass, PersonalityClassGroup, DisplayPersonalityType } from '../../lib/personality-test';
 
 interface TestResultGrowthProps {
   personalityClassGroup: PersonalityClassGroup;
-  personalityType: PersonalityClass;
+  personalityType: DisplayPersonalityType;
 }
 
 const TestResultGrowth: React.FC<TestResultGrowthProps> = ({

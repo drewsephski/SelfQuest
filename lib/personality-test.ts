@@ -28,6 +28,12 @@ export interface PersonalityClass {
   brief: string;
 }
 
+export interface DisplayPersonalityType {
+  type: PersonalityClassGroup["type"];
+  description: string;
+  brief: string;
+}
+
 export interface PersonalityClassGroup {
   type: `${Extroverted | Introverted}${Sensing | Intuitive}${
     | Thinking

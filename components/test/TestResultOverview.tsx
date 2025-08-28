@@ -1,9 +1,9 @@
 import { Box, Heading, Text, Image, Highlight, Table, Tbody, Tr, Th, Td } from '@chakra-ui/react';
-import { PersonalityClass, PersonalityClassGroup } from '../../data/personality-classes';
+import { PersonalityClass, PersonalityClassGroup, DisplayPersonalityType } from '../../lib/personality-test';
 
 interface TestResultOverviewProps {
   personalityClassGroup: PersonalityClassGroup;
-  personalityType: PersonalityClass;
+  personalityType: DisplayPersonalityType;
 }
 
 const TestResultOverview: React.FC<TestResultOverviewProps> = ({
@@ -13,12 +13,12 @@ const TestResultOverview: React.FC<TestResultOverviewProps> = ({
   return (
     <Box p={4}>
       <Heading as="h1" textAlign="center" color="text.primary">
-        <Highlight query={personalityType.type} styles={{ color: "primary.500" }}>
-          {`${personalityType.type} - ${personalityType.name}`}
+        <Highlight query={personalityClassGroup.name} styles={{ color: "primary.500" }}>
+          {`${personalityClassGroup.type} - ${personalityClassGroup.name}`}
         </Highlight>
       </Heading>
-      <Text fontSize="lg" fontWeight="bold" textAlign="center" color="text.secondary">
-        {personalityType.nameDescription}
+      <Text fontSize="lg" fontWeight="bold" textAlign="center" color="text.secondary"> 
+        {personalityType.description}
       </Text>
       <Image
         alt="illustration"
@@ -28,10 +28,10 @@ const TestResultOverview: React.FC<TestResultOverviewProps> = ({
         mx="auto"
         display="block"
       />
-      <Heading scrollMarginTop={8} id="description" my={8} fontSize="md" textAlign="center" color="text.primary">
-        {personalityType.epithet}
+      <Heading scrollMarginTop={8} id="description" my={8} fontSize="md" textAlign="center" color="text.primary" as="h2">
+        {personalityClassGroup.epithet}
       </Heading>
-      {personalityType.description
+      {personalityClassGroup.description
         .split(/\.\n+/g)
         .map((description) => (description.endsWith(".") ? description : `${description}.`))
         .map((description, index) => (
