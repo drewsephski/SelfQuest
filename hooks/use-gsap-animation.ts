@@ -64,7 +64,7 @@ export function useGSAPAnimation(options: UseGSAPAnimationOptions = {}): UseGSAP
     return tween;
   }, [options]);
 
-  const timeline = useCallback((vars?: gsap.core.TimelineVars): gsap.core.Timeline => {
+  const timeline = useCallback((vars?: gsap.TimelineVars): gsap.core.Timeline => {
     if (timelineRef.current) {
       timelineRef.current.kill();
     }
@@ -365,7 +365,7 @@ export function useParticleSystem() {
     }
 
     return particles;
-  }, [animate, set, particleCount]);
+  }, [animate, particleCount]);
 
   const floatingParticles = useCallback((
     container: gsap.DOMTarget,
