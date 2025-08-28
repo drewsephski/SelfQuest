@@ -2,24 +2,6 @@ import React, { useRef, useEffect, useMemo, useCallback, useState } from 'react'
 
 import { gsap } from 'gsap';
 import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
-
-// For this demo, we'll simulate GSAP functionality
-const gsap = {
-  timeline: (config?: any) => ({
-    to: (target: any, vars: any, position?: any) => ({
-      stagger: (staggerVars: any) => ({}),
-      delay: (delay: number) => ({})
-    }),
-    set: (target: any, vars: any) => ({}),
-    add: (callback: any, position?: any) => ({}),
-    eventCallback: (type: string, callback: () => void) => ({})
-  }),
-  set: (target: any, vars: any) => ({}),
-  to: (target: any, vars: any) => ({}),
-  killTweensOf: (target: any) => ({}),
-  registerPlugin: (plugin: any) => ({})
-};
-
 interface AnimationPreset {
   name: string;
   timing: {

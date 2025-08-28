@@ -1,12 +1,11 @@
-import { useRadio, Box, useColorModeValue } from "@chakra-ui/react";
+import { useRadio, Box, useColorModeValue, UseRadioProps } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
 interface TestAnswerOptionProps {
   children: ReactNode;
-  [key: string]: any;
 }
 
-export default function TestAnswerOption(props: TestAnswerOptionProps) {
+export default function TestAnswerOption(props: TestAnswerOptionProps & UseRadioProps) {
   const { getInputProps, getRadioProps } = useRadio(props);
   const input = getInputProps();
   const radio = getRadioProps();

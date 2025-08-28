@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRadioGroup, Flex, Text, Button, useToast } from "@chakra-ui/react";
 
 import TestProgress from "./test-progress";
@@ -81,16 +81,6 @@ export default function TestQuestion({}: TestQuestionProps) {
     };
   }, []);
 
-  // Automatic submission when all questions are answered
-  useEffect(() => {
-    const allQuestionsAnswered = userTestAnswers.every(answer => answer !== undefined);
-    const isOnLastQuestion = currentPersonalityTestIndex === personalityTest.length - 1;
-
-    if (allQuestionsAnswered && isOnLastQuestion && !isSubmitting) {
-      handleSeeResultButtonClick();
-    }
-  }, [userTestAnswers, currentPersonalityTestIndex, isSubmitting, handleSeeResultButtonClick]);
-
   const handleSeeResultButtonClick = useCallback(async () => {
     setIsSubmitting(true);
 
@@ -135,7 +125,17 @@ export default function TestQuestion({}: TestQuestionProps) {
     } finally {
       setIsSubmitting(false);
     }
-  }, [router, toast, userTestAnswers, setUserTestAnswers, isSubmitting]);
+  }, [router, toast, userTestAnswers, setUserTestAnswers]);
+
+  // Automatic submission when all questions are answered
+  useEffect(() => {
+    const allQuestionsAnswered = userTestAnswers.every(answer => answer !== undefined);
+    const isOnLastQuestion = currentPersonalityTestIndex === personalityTest.length - 1;
+
+    if (allQuestionsAnswered && isOnLastQuestion && !isSubmitting) {
+      handleSeeResultButtonClick();
+    }
+  }, [userTestAnswers, currentPersonalityTestIndex, isSubmitting, handleSeeResultButtonClick]);
 
   return (
     <Flex
@@ -194,10 +194,7 @@ export default function TestQuestion({}: TestQuestionProps) {
             return (
               <TestAnswerOption
                 key={answerOption.type}
-                {...radio}
-                style={{
-                  animationDelay: `${index * 100}ms`,
-                }}
+                {...radio} // Pass radio props directly
               >
                 {answerOption.answer}
               </TestAnswerOption>
@@ -219,8 +216,8 @@ export default function TestQuestion({}: TestQuestionProps) {
           isDisabled={currentPersonalityTestIndex === 0}
           onClick={handlePreviousButtonClick}
           _hover={{
-            transform: currentPersonalityTestIndex === 0 ? "none" : "translateY(-2px)",
-            shadow: currentPersonalityTestIndex === 0 ? "none" : "md",
+            transform: "translateY(-2px)",
+            shadow: "md",
           }}
           transition="all 0.2s"
         >
