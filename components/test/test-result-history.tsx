@@ -23,10 +23,14 @@ export default function TestResultHistory(props: TestResultHistoryProps) {
       alignSelf="flex-start"
       alignItems="center"
       direction="column"
+      bg="background.tertiary"
+      p={4}
+      rounded="lg"
     >
       <Heading
         as="h1"
         textAlign="center"
+        color="text.primary"
       >
         Test Result History
       </Heading>
@@ -48,12 +52,12 @@ export default function TestResultHistory(props: TestResultHistoryProps) {
             alignItems="center"
             justifyContent="space-between"
             borderWidth={1}
-            borderColor="gray.100"
+            borderColor="gray.300"
             _hover={{
-              bg: "gray.100",
+              bg: "background.secondary",
             }}
           >
-            <Text>
+            <Text color="text.secondary">
               {dayjs(testResult.timestamp).format("D MMMM YYYY, HH:mm ")}
             </Text>
             <FiChevronRight />

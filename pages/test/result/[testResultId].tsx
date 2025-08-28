@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Option, AsyncData, Result } from "@swan-io/boxed";
 import { Flex, Show, Text } from "@chakra-ui/react";
 
 import MainLayout from "../../../components/layouts/main-layout";
@@ -15,51 +14,55 @@ import {
 export default function TestResultPage() {
   const router = useRouter();
 
-  const [testResult, setTestResult] = useState<
-    AsyncData<Result<Option<ITestResult>, Error>>
-  >(AsyncData.NotAsked());
+  const [testResult, setTestResult] = useState<{
+    status: "not-asked" | "loading" | "done";
+    data?: { success: boolean; data?: ITestResult | null; error?: Error };
+  }>({ status: "not-asked" });
 
   useEffect(() => {
     if (router.isReady) {
-      setTestResult(AsyncData.Loading());
+      setTestResult({ status: "loading" });
 
       const id = parseInt(router.query.testResultId as string);
 
-      getSavedTestResult(id).tap((result) =>
-        setTestResult(AsyncData.Done(result))
+      getSavedTestResult(id).then((result) =>
+        setTestResult({ status: "done", data: result })
       );
     }
   }, [router.isReady, router.query.testResultId]);
 
   return (
     <MainLayout>
-      {testResult.match({
-        NotAsked: () => <Text>Loading</Text>,
-        Loading: () => <Text>Loading</Text>,
-        Done: (result) =>
-          result.match({
-            Error: () => <Text>Something went wrong! Please refresh!</Text>,
-            Ok: (value) =>
-              value.match({
-                Some: (data) => (
-                  <Flex
-                    h="full"
-                    direction={{
-                      base: "column",
-                      lg: "row",
-                    }}
-                  >
-                    <TestResultStats testResult={data} />
-                    <TestResult testResult={data} />
-                    <Show above="lg">
-                      <TestResultTableOfContent />
-                    </Show>
-                  </Flex>
-                ),
-                None: () => <Text>No Data</Text>,
-              }),
-          }),
-      })}
+      {testResult.status === "not-asked" && <Text>Loading</Text>}
+      {testResult.status === "loading" && <Text>Loading</Text>}
+      {testResult.status === "done" && testResult.data && (
+        <>
+          {!testResult.data.success && (
+            <Text>Something went wrong! Please refresh!</Text>
+          )}
+          {testResult.data.success && (
+            <>
+              {testResult.data.data ? (
+                <Flex
+                  h="full"
+                  direction={{
+                    base: "column",
+                    lg: "row",
+                  }}
+                >
+                  <TestResultStats testResult={testResult.data.data} />
+                  <TestResult testResult={testResult.data.data} />
+                  <Show above="lg">
+                    <TestResultTableOfContent />
+                  </Show>
+                </Flex>
+              ) : (
+                <Text>No Data</Text>
+              )}
+            </>
+          )}
+        </>
+      )}
     </MainLayout>
   );
 }

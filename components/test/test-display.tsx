@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Box, Container, Fade } from "@chakra-ui/react";
 
 import TestMenu from "./test-menu";
 import TestInstructions from "./test-instructions";
@@ -17,34 +17,33 @@ export default function TestDisplay() {
   }
 
   return (
-    <Flex
-      alignSelf="flex-start"
-      w="full"
-      h="full"
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-      gap={2}
-      px={1}
-    >
-      <TestMenu
-        onShowInstructionsButtonClick={handleShowInstructionsButtonClick}
-      />
+    <Container maxW="container.lg" py={4}>
       <Flex
-        w={{
-          lg: "50%",
-          base: "100%",
-        }}
-        h="full"
+        w="full"
+        direction="column"
+        gap={6}
+        minH="80vh"
       >
-        {showTestInstructions ? (
-          <TestInstructions
-            onCloseTestInstructions={handleCloseTestInstructions}
-          />
-        ) : (
-          <TestQuestion />
-        )}
+        <TestMenu
+          onShowInstructionsButtonClick={handleShowInstructionsButtonClick}
+        />
+        
+        <Box flex="1" position="relative">
+          <Fade in={showTestInstructions} unmountOnExit>
+            <Box position="absolute" w="full" h="full">
+              <TestInstructions
+                onCloseTestInstructions={handleCloseTestInstructions}
+              />
+            </Box>
+          </Fade>
+          
+          <Fade in={!showTestInstructions} unmountOnExit>
+            <Box position="absolute" w="full" h="full">
+              <TestQuestion />
+            </Box>
+          </Fade>
+        </Box>
       </Flex>
-    </Flex>
+    </Container>
   );
 }

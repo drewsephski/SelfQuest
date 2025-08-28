@@ -44,6 +44,7 @@ export default function TestResult(props: TestResultProps) {
         id={personalityClassGroup.type}
         as="h1"
         textAlign="center"
+        color="text.primary"
       >
         <Highlight
           query={personalityClassGroup.type}
@@ -56,6 +57,7 @@ export default function TestResult(props: TestResultProps) {
         fontSize="lg"
         fontWeight="bold"
         textAlign="center"
+        color="text.secondary"
       >
         {personalityClassGroup.nameDescription}
       </Text>
@@ -72,6 +74,7 @@ export default function TestResult(props: TestResultProps) {
         my={8}
         fontSize="md"
         textAlign="center"
+        color="text.primary"
       >
         {personalityClassGroup.epithet}
       </Heading>
@@ -84,6 +87,7 @@ export default function TestResult(props: TestResultProps) {
           <Text
             key={index}
             textAlign="justify"
+            color="text.secondary"
           >
             {`${description}`}
           </Text>
@@ -95,32 +99,33 @@ export default function TestResult(props: TestResultProps) {
         as="h2"
         size="md"
         textAlign="center"
+        color="text.primary"
       >
         Jungian Functional Preference Ordering
       </Heading>
-      <Table>
+      <Table variant="simple">
         <Tbody>
           <Tr>
-            <Th>Dominant</Th>
-            <Td>
+            <Th color="text.primary">Dominant</Th>
+            <Td color="text.secondary">
               {personalityClassGroup.jungianFunctionalPreference.dominant}
             </Td>
           </Tr>
           <Tr>
-            <Th>Auxiliary</Th>
-            <Td>
+            <Th color="text.primary">Auxiliary</Th>
+            <Td color="text.secondary">
               {personalityClassGroup.jungianFunctionalPreference.auxiliary}
             </Td>
           </Tr>
           <Tr>
-            <Th>Tertiary</Th>
-            <Td>
+            <Th color="text.primary">Tertiary</Th>
+            <Td color="text.secondary">
               {personalityClassGroup.jungianFunctionalPreference.tertiary}
             </Td>
           </Tr>
           <Tr>
-            <Th>Inferior</Th>
-            <Td>
+            <Th color="text.primary">Inferior</Th>
+            <Td color="text.secondary">
               {personalityClassGroup.jungianFunctionalPreference.inferior}
             </Td>
           </Tr>
@@ -133,6 +138,7 @@ export default function TestResult(props: TestResultProps) {
         as="h2"
         size="md"
         textAlign="center"
+        color="text.primary"
       >
         {`${personalityClassGroup.type} General Traits`}
       </Heading>
@@ -142,6 +148,7 @@ export default function TestResult(props: TestResultProps) {
             my={2}
             key={index}
             textAlign="justify"
+            color="text.secondary"
           >
             {trait}
           </ListItem>
@@ -154,6 +161,7 @@ export default function TestResult(props: TestResultProps) {
         as="h2"
         size="md"
         textAlign="center"
+        color="text.primary"
       >
         Relationship Strengths
       </Heading>
@@ -164,6 +172,7 @@ export default function TestResult(props: TestResultProps) {
               my={2}
               key={index}
               textAlign="justify"
+              color="text.secondary"
             >
               {relationshipStrength}
             </ListItem>
@@ -177,6 +186,7 @@ export default function TestResult(props: TestResultProps) {
         as="h2"
         size="md"
         textAlign="center"
+        color="text.primary"
       >
         Relationship Weaknesses
       </Heading>
@@ -187,6 +197,7 @@ export default function TestResult(props: TestResultProps) {
               my={2}
               key={index}
               textAlign="justify"
+              color="text.secondary"
             >
               {relationshipWeakness}
             </ListItem>
@@ -200,6 +211,7 @@ export default function TestResult(props: TestResultProps) {
         as="h2"
         size="md"
         textAlign="center"
+        color="text.primary"
       >
         Success Definition
       </Heading>
@@ -214,6 +226,7 @@ export default function TestResult(props: TestResultProps) {
           <Text
             key={index}
             textAlign="justify"
+            color="text.secondary"
           >
             {`${successDefinition}`}
           </Text>
@@ -225,6 +238,7 @@ export default function TestResult(props: TestResultProps) {
         as="h2"
         size="md"
         textAlign="center"
+        color="text.primary"
       >
         Strengths
       </Heading>
@@ -234,6 +248,7 @@ export default function TestResult(props: TestResultProps) {
             my={2}
             key={index}
             textAlign="justify"
+            color="text.secondary"
           >
             {strength}
           </ListItem>
@@ -246,6 +261,7 @@ export default function TestResult(props: TestResultProps) {
         as="h2"
         size="md"
         textAlign="center"
+        color="text.primary"
       >
         Special Gifts
       </Heading>
@@ -255,6 +271,7 @@ export default function TestResult(props: TestResultProps) {
             my={2}
             key={index}
             textAlign="justify"
+            color="text.secondary"
           >
             {gift}
           </ListItem>
@@ -267,6 +284,7 @@ export default function TestResult(props: TestResultProps) {
         as="h2"
         size="md"
         textAlign="center"
+        color="text.primary"
       >
         Potential Problem Areas
       </Heading>
@@ -283,6 +301,7 @@ export default function TestResult(props: TestResultProps) {
               key={index}
               textAlign="justify"
               alignSelf="start"
+              color="text.secondary"
             >
               {`${potentialProblemArea}`}
             </Text>
@@ -295,6 +314,7 @@ export default function TestResult(props: TestResultProps) {
                 my={2}
                 key={index}
                 textAlign="justify"
+                color="text.secondary"
               >
                 {potentialProblemArea}
               </ListItem>
@@ -309,6 +329,7 @@ export default function TestResult(props: TestResultProps) {
         as="h2"
         size="md"
         textAlign="center"
+        color="text.primary"
       >
         Explanation of Problems
       </Heading>
@@ -324,6 +345,7 @@ export default function TestResult(props: TestResultProps) {
             key={index}
             textAlign="justify"
             alignSelf="start"
+            color="text.secondary"
           >
             {`${explanationOfProblem}`}
           </Text>
@@ -335,6 +357,7 @@ export default function TestResult(props: TestResultProps) {
         as="h2"
         size="md"
         textAlign="center"
+        color="text.primary"
       >
         Solutions
       </Heading>
@@ -346,6 +369,7 @@ export default function TestResult(props: TestResultProps) {
             key={index}
             textAlign="justify"
             alignSelf="start"
+            color="text.secondary"
           >
             {`${solution}`}
           </Text>
@@ -357,6 +381,7 @@ export default function TestResult(props: TestResultProps) {
         as="h2"
         size="md"
         textAlign="center"
+        color="text.primary"
       >
         Living Happily Tips
       </Heading>
@@ -368,6 +393,7 @@ export default function TestResult(props: TestResultProps) {
             key={index}
             textAlign="justify"
             alignSelf="start"
+            color="text.secondary"
           >
             {`${tips}`}
           </Text>
@@ -382,6 +408,7 @@ export default function TestResult(props: TestResultProps) {
               as="h2"
               size="md"
               textAlign="center"
+              color="text.primary"
             >
               Specific Suggestions
             </Heading>
@@ -395,6 +422,7 @@ export default function TestResult(props: TestResultProps) {
                   key={index}
                   textAlign="justify"
                   alignSelf="start"
+                  color="text.secondary"
                 >
                   {`${suggestion}`}
                 </Text>
@@ -411,6 +439,7 @@ export default function TestResult(props: TestResultProps) {
               as="h2"
               size="md"
               textAlign="center"
+              color="text.primary"
             >
               Specific Suggestions
             </Heading>
@@ -420,6 +449,7 @@ export default function TestResult(props: TestResultProps) {
                   my={2}
                   key={index}
                   textAlign="justify"
+                  color="text.secondary"
                 >
                   {suggestion}
                 </ListItem>
@@ -434,6 +464,7 @@ export default function TestResult(props: TestResultProps) {
         as="h2"
         size="md"
         textAlign="center"
+        color="text.primary"
       >
         Ten Rules to Live to Achieve Success
       </Heading>
@@ -443,6 +474,7 @@ export default function TestResult(props: TestResultProps) {
             my={2}
             key={index}
             textAlign="justify"
+            color="text.secondary"
           >
             {rule}
           </ListItem>

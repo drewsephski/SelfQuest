@@ -1,5 +1,4 @@
 import { openDB } from "idb";
-import { Option, Future, Result } from "@swan-io/boxed";
 import { personalityTest } from "../data/personality-test";
 import { personalityClassGroup } from "../data/personality-class-groups";
 
@@ -147,22 +146,20 @@ export function getPersonalityClassGroupByTestScores(
 }
 
 export function getSavedTestResult(id: number) {
-  return Future.make<Result<Option<TestResult>, Error>>((resolve) => {
+  return new Promise<{ success: boolean; data?: TestResult | null; error?: Error }>((resolve) => {
     getDb()
       .then((db) => db.get(TEST_RESULT_STORE, id))
-      .then(Option.fromNullable)
-      .then((testResult) => resolve(Result.Ok(testResult)))
-      .catch((error) => resolve(Result.Error(error)));
+      .then((testResult) => resolve({ success: true, data: testResult || null }))
+      .catch((error) => resolve({ success: false, error }));
   });
 }
 
 export function getAllSavedTestResult() {
-  return Future.make<Result<Option<TestResult[]>, Error>>((resolve) => {
+  return new Promise<{ success: boolean; data?: TestResult[] | null; error?: Error }>((resolve) => {
     getDb()
       .then((db) => db.getAll(TEST_RESULT_STORE))
-      .then(Option.fromNullable)
-      .then((testResult) => resolve(Result.Ok(testResult)))
-      .catch((error) => resolve(Result.Error(error)));
+      .then((testResult) => resolve({ success: true, data: testResult || null }))
+      .catch((error) => resolve({ success: false, error }));
   });
 }
 
@@ -171,10 +168,10 @@ export function saveTestResult(testResult: {
   testAnswers: TestAnswerOption["type"][];
   testScores: PersonalityClass["type"][];
 }) {
-  return Future.make<Result<number, Error>>((resolve) => {
+  return new Promise<{ success: boolean; data?: number; error?: Error }>((resolve) => {
     getDb()
       .then((db) => db.put(TEST_RESULT_STORE, testResult))
-      .then((id) => resolve(Result.Ok(id)))
-      .catch((error) => resolve(Result.Error(error)));
+      .then((id) => resolve({ success: true, data: id }))
+      .catch((error) => resolve({ success: false, error }));
   });
 }

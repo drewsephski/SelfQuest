@@ -1,47 +1,40 @@
 import Link from "next/link";
-import { Flex, Text, Button } from "@chakra-ui/react";
+import { 
+  Box, 
+  Container, 
+  Text, 
+  HStack, 
+  VStack,
+  useColorModeValue,
+  Divider
+} from "@chakra-ui/react";
 
 export default function Footer() {
+  const bgColor = useColorModeValue("background.secondary.light", "background.secondary.dark");
+  const textColor = useColorModeValue("text.secondary.light", "text.secondary.dark");
+  const linkColor = useColorModeValue("primary.600", "primary.300");
+
   return (
-    <Flex
-      as="footer"
-      py={2}
-      w="100%"
-      h="full"
-      bg="black"
-      color="white"
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Text>
-        All test on this website is based on this{" "}
-        <Link
-          href="http://www.lrjj.cn/encrm1.0/public/upload/MBTI-personality-test.pdf"
-          target="_blank"
-        >
-          <Button
-            colorScheme="primary"
-            variant="link"
-          >
-            source
-          </Button>
-        </Link>
-      </Text>
-      <Text>
-        🔨 Made by{" "}
-        <Link
-          href="https://github.com/rauf-21"
-          target="_blank"
-        >
-          <Button
-            colorScheme="primary"
-            variant="link"
-          >
-            rauf-21
-          </Button>
-        </Link>
-      </Text>
-    </Flex>
+    <Box as="footer" bg={bgColor} mt="auto">
+      <Container maxW="container.xl" py={8}>
+        <VStack spacing={4}>
+          <Divider />
+          <VStack spacing={2} textAlign="center">
+            <HStack spacing={1} fontSize="sm" color={textColor}>
+              <Text>SelfQuest - Built with ❤️ by</Text>
+              <Link
+                href="https://github.com/drewsephski"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Text color={linkColor} textDecoration="underline hover:text-white">
+                  drew sepeczi
+                </Text>
+              </Link>
+            </HStack>
+          </VStack>
+        </VStack>
+      </Container>
+    </Box>
   );
 }

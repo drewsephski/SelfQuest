@@ -24,13 +24,13 @@ function ScoreStats(props: {
       justifyContent="space-between"
       bg="white"
     >
-      <Text fontWeight="semibold">
+      <Text fontWeight="semibold" color="black">
         {((testScoresFiltered.length / props.testScores.length) * 100)
           .toFixed(2)
           .replace(/[.,]0+$/, "")}
         %
       </Text>
-      <Text>({testScoresFiltered.length})</Text>
+      <Text color="black">({testScoresFiltered.length})</Text>
     </Flex>
   );
 }
@@ -65,11 +65,14 @@ export default function TestResultStats(props: TestResultStatsProps) {
         lg: "sticky",
       }}
       alignSelf="flex-start"
+      bg="background.tertiary"
+      rounded="lg"
     >
       <Heading
         as="h1"
         textAlign="center"
         fontSize="lg"
+        color="text.primary"
       >
         Scores
       </Heading>

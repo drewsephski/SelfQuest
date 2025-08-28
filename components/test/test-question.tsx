@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { useRadioGroup, Flex, Text, Button } from "@chakra-ui/react";
+import { useRadioGroup, Flex, Text, Button, useToast } from "@chakra-ui/react";
 
 import TestProgress from "./test-progress";
 import TestAnswerOption from "./test-answer-option";
@@ -15,11 +15,13 @@ import useUserTestAnswersStore from "../../store/use-user-test-answers";
 
 export default function TestQuestion() {
   const router = useRouter();
+  const toast = useToast();
 
   const { userTestAnswers, setUserTestAnswers } = useUserTestAnswersStore();
 
   const [currentPersonalityTestIndex, setCurrentPersonalityTestIndex] =
     useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isUserAlreadyPickAnswer =
     userTestAnswers[currentPersonalityTestIndex] !== undefined;
@@ -70,67 +72,110 @@ export default function TestQuestion() {
     });
   }
 
-  function handleSeeResultButtonClick() {
+  async function handleSeeResultButtonClick() {
+    setIsSubmitting(true);
+    
     const timestamp = Date.now();
     const testScores = userTestAnswers.map((answer, index) =>
       getQuestionAnswerScore(index + 1, answer)
     );
 
-    saveTestResult({
-      testAnswers: userTestAnswers,
-      testScores,
-      timestamp,
-    })
-      .tap(() => {
-        setUserTestAnswers([]);
-      })
-      .tapOk((id) => {
-        router.replace(`/test/result/${id}`);
-      })
-      .tapError((error) => {
-        console.error(error);
+    try {
+      const result = await saveTestResult({
+        testAnswers: userTestAnswers,
+        testScores,
+        timestamp,
       });
+
+      if (result.success && result.data) {
+        toast({
+          title: "Test completed!",
+          description: "Your results have been saved successfully.",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+        
+        // Clear user answers after successful save
+        setUserTestAnswers([]);
+        // Navigate to result page
+        router.replace(`/test/result/${result.data}`);
+      } else {
+        throw new Error(result.error?.message || "Failed to save test result");
+      }
+    } catch (error) {
+      console.error("Error saving test result:", error);
+      
+      toast({
+        title: "Error saving results",
+        description: "There was a problem saving your test results. Please try again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
     <Flex
-      py={4}
+      py={6}
       w="full"
       h="full"
-      gap={8}
+      gap={1}
       direction="column"
       justifyContent="space-between"
       alignItems="center"
+      maxW="2xl"
+      mx="auto"
     >
-      <TestProgress />
-      <Flex direction="column">
+      <TestProgress currentQuestionIndex={currentPersonalityTestIndex} />
+      
+      <Flex
+        direction="column"
+        textAlign="center"
+        gap={2}
+        px={4}
+      >
         <Text
-          fontWeight="bold"
-          align="center"
+          fontSize="sm"
+          fontWeight="semibold"
+          color="primary.500"
+          textTransform="uppercase"
+          letterSpacing="wide"
         >
-          #{currentPersonalityTestIndex + 1}
+          Question {currentPersonalityTestIndex + 1} of {personalityTest.length}
         </Text>
         <Text
-          fontSize="lg"
-          align="center"
+          fontSize={{ base: "xl", md: "2xl" }}
+          fontWeight="medium"
+          lineHeight="shorter"
+          color="gray.700"
+          _dark={{ color: "gray.200" }}
         >
           {personalityTest[currentPersonalityTestIndex].question}
         </Text>
       </Flex>
+      
       <Flex
         w="full"
-        gap={4}
+        gap={3}
         direction="column"
+        px={4}
         {...group}
       >
         {personalityTest[currentPersonalityTestIndex].answerOptions.map(
-          (answerOption) => {
+          (answerOption, index) => {
             const radio = getRadioProps({ value: answerOption.type });
 
             return (
               <TestAnswerOption
                 key={answerOption.type}
                 {...radio}
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                }}
               >
                 {answerOption.answer}
               </TestAnswerOption>
@@ -138,27 +183,42 @@ export default function TestQuestion() {
           }
         )}
       </Flex>
+      
       <Flex
         direction="row"
         w="full"
         gap={4}
+        px={4}
       >
         <Button
           w="full"
           variant="outline"
-          {...(currentPersonalityTestIndex === 0 && {
-            disabled: true,
-          })}
+          colorScheme="gray"
+          isDisabled={currentPersonalityTestIndex === 0}
           onClick={handlePreviousButtonClick}
+          _hover={{
+            transform: currentPersonalityTestIndex === 0 ? "none" : "translateY(-2px)",
+            shadow: currentPersonalityTestIndex === 0 ? "none" : "md",
+          }}
+          transition="all 0.2s"
         >
           Previous
         </Button>
+        
         {isUserAlreadyPickAnswer &&
         currentPersonalityTestIndex === personalityTest.length - 1 ? (
           <Button
             w="full"
             colorScheme="primary"
             onClick={handleSeeResultButtonClick}
+            isLoading={isSubmitting}
+            loadingText="Saving Results..."
+            _hover={{
+              transform: isSubmitting ? "none" : "translateY(-2px)",
+              shadow: isSubmitting ? "none" : "lg",
+            }}
+            transition="all 0.2s"
+            size="lg"
           >
             See Result
           </Button>
@@ -166,11 +226,13 @@ export default function TestQuestion() {
           <Button
             w="full"
             colorScheme="primary"
-            variant="outline"
-            {...(!isUserAlreadyPickAnswer && {
-              disabled: true,
-            })}
+            isDisabled={!isUserAlreadyPickAnswer}
             onClick={handleNextButtonClick}
+            _hover={{
+              transform: !isUserAlreadyPickAnswer ? "none" : "translateY(-2px)",
+              shadow: !isUserAlreadyPickAnswer ? "none" : "md",
+            }}
+            transition="all 0.2s"
           >
             Next
           </Button>

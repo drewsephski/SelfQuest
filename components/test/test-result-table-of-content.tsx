@@ -41,14 +41,16 @@ export default function TestResultTableOfContent() {
         base: "25%",
       }}
       h="min-content"
-      p={2}
+      p={4}
       gap={4}
       top={5}
       direction="column"
       pos="sticky"
       alignSelf="flex-start"
+      bg="background.tertiary"
+      rounded="lg"
     >
-      <Text fontWeight="bold">Table Of Content</Text>
+      <Text fontWeight="bold" color="text.primary">Table Of Content</Text>
       <UnorderedList
         spacing={2}
         listStyleType="none"
@@ -59,7 +61,7 @@ export default function TestResultTableOfContent() {
             fontSize="sm"
             cursor="pointer"
             _hover={{
-              borderLeft: "4px solid black",
+              borderLeft: "4px solid primary.500",
               pl: 2,
             }}
             {...(heading.id === activeId && {
@@ -70,7 +72,9 @@ export default function TestResultTableOfContent() {
               handleTableOfContentLinkClick(event, heading.id)
             }
           >
-            <Link href={`#${heading.id}`}>{heading.text}</Link>
+            <Link href={`#${heading.id}`} color="text.secondary">
+              {heading.text}
+            </Link>
           </ListItem>
         ))}
       </UnorderedList>

@@ -1,32 +1,53 @@
-import { useRadio, Box } from "@chakra-ui/react";
+import { useRadio, Box, useColorModeValue } from "@chakra-ui/react";
+import { ReactNode } from "react";
 
-export default function TestAnswerOption(props: any) {
-  const { getInputProps, getCheckboxProps } = useRadio(props);
+interface TestAnswerOptionProps {
+  children: ReactNode;
+  [key: string]: any;
+}
+
+export default function TestAnswerOption(props: TestAnswerOptionProps) {
+  const { getInputProps, getRadioProps } = useRadio(props);
   const input = getInputProps();
-  const checkbox = getCheckboxProps();
+  const radio = getRadioProps();
+
+  const borderColor = useColorModeValue("gray.200", "gray.600");
+  const hoverBg = useColorModeValue("gray.50", "gray.700");
+  const checkedBg = useColorModeValue("primary.500", "primary.600");
 
   return (
-    <Box
-      w="full"
-      as="label"
-    >
+    <Box w="full" as="label">
       <input {...input} />
       <Box
-        px={5}
-        py={3}
+        px={6}
+        py={4}
         cursor="pointer"
-        borderWidth={1}
-        borderRadius="md"
+        borderWidth={2}
+        borderRadius="lg"
+        borderColor={borderColor}
         userSelect="none"
+        transition="all 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
+        _hover={{
+          bg: hoverBg,
+          borderColor: "primary.300",
+          transform: "translateY(-1px)",
+          shadow: "md",
+        }}
         _checked={{
-          bg: "primary.500",
+          bg: checkedBg,
           color: "white",
-          borderColor: "primary.500",
+          borderColor: checkedBg,
+          transform: "translateY(-1px)",
+          shadow: "lg",
         }}
         _focus={{
-          boxShadow: "outline",
+          boxShadow: "0 0 0 3px rgba(52, 152, 219, 0.3)",
+          outline: "none",
         }}
-        {...checkbox}
+        _active={{
+          transform: "translateY(0)",
+        }}
+        {...radio}
       >
         {props.children}
       </Box>

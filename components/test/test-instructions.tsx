@@ -1,11 +1,17 @@
 import {
-  Flex,
+  VStack,
   Heading,
   Text,
-  UnorderedList,
-  ListItem,
   Button,
+  Box,
+  Icon,
+  HStack,
+  useColorModeValue,
+  Flex,
+  ListItem,
+  UnorderedList,
 } from "@chakra-ui/react";
+import { FiClock, FiCheckCircle, FiHeart, FiZap } from "react-icons/fi";
 
 interface TestInstructionsProps {
   onCloseTestInstructions: () => void;
@@ -18,27 +24,30 @@ export default function TestInstructions(props: TestInstructionsProps) {
       px={4}
       direction="column"
       gap={8}
+      bg="background.tertiary"
+      p={6}
+      rounded="lg"
     >
-      <Heading>Instructions</Heading>
+      <Heading color="text.primary">Instructions</Heading>
       <Flex
         direction="column"
         gap={2}
       >
-        <Text>
+        <Text color="text.secondary">
           Completing the test should only take 15 minutes or so. Here is several
           hints about how to complete this test:
         </Text>
         <UnorderedList spacing={2}>
-          <ListItem>
+          <ListItem color="text.secondary">
             There are no right answers to any of these questions.
           </ListItem>
-          <ListItem>
+          <ListItem color="text.secondary">
             Answer the questions quickly, do not over-analyze them. Some seem
             worded poorly. Go with what feels best.
           </ListItem>
-          <ListItem>
-            Answer the questions as “the way you are”, not “the way you’d like
-            to be seen by others”.
+          <ListItem color="text.secondary">
+            Answer the questions as &ldquo;the way you are&rdquo;, not &ldquo;the way you&apos;d like
+            to be seen by others&rdquo;.
           </ListItem>
         </UnorderedList>
       </Flex>

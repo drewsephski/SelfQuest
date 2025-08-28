@@ -1,0 +1,17 @@
+{
+  "name": "MBTI Personality Test",
+  "short_name": "MBTI Test",
+  "description": "Discover your personality type with our comprehensive MBTI test",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3498db",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
