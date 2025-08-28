@@ -13,7 +13,9 @@ import {
 } from "../../lib/personality-test";
 import useUserTestAnswersStore from "../../store/use-user-test-answers";
 
-export default function TestQuestion() {
+interface TestQuestionProps {}
+
+export default function TestQuestion({}: TestQuestionProps) {
   const router = useRouter();
   const toast = useToast();
 
@@ -37,7 +39,10 @@ export default function TestQuestion() {
 
       setUserTestAnswers(newUserTestAnswers);
 
-      handleNextButtonClick();
+      // Automatically advance to next question if not the last one
+      if (currentPersonalityTestIndex < personalityTest.length - 1) {
+        setCurrentPersonalityTestIndex(currentPersonalityTestIndex + 1);
+      }
     },
   });
 
@@ -52,16 +57,6 @@ export default function TestQuestion() {
     setValue(userTestAnswers[currentPersonalityTestIndex]);
   }, [currentPersonalityTestIndex, userTestAnswers, setValue]);
 
-  function handleNextButtonClick() {
-    setCurrentPersonalityTestIndex((currentPersonalityTestIndex) => {
-      if (currentPersonalityTestIndex + 1 > personalityTest.length - 1) {
-        return currentPersonalityTestIndex;
-      }
-
-      return currentPersonalityTestIndex + 1;
-    });
-  }
-
   function handlePreviousButtonClick() {
     setCurrentPersonalityTestIndex((currentPersonalityTestIndex) => {
       if (currentPersonalityTestIndex - 1 < 0) {
@@ -72,9 +67,33 @@ export default function TestQuestion() {
     });
   }
 
+  function handleGoToQuestion(questionIndex: number) {
+    setCurrentPersonalityTestIndex(questionIndex);
+  }
+
+  useEffect(() => {
+    const listener = (e: any) => {
+      handleGoToQuestion(e.detail);
+    };
+    window.addEventListener("goToQuestion", listener);
+    return () => {
+      window.removeEventListener("goToQuestion", listener);
+    };
+  }, []);
+
+  // Automatic submission when all questions are answered
+  useEffect(() => {
+    const allQuestionsAnswered = userTestAnswers.every(answer => answer !== undefined);
+    const isOnLastQuestion = currentPersonalityTestIndex === personalityTest.length - 1;
+
+    if (allQuestionsAnswered && isOnLastQuestion && !isSubmitting) {
+      handleSeeResultButtonClick();
+    }
+  }, [userTestAnswers, currentPersonalityTestIndex, isSubmitting]);
+
   async function handleSeeResultButtonClick() {
     setIsSubmitting(true);
-    
+
     const timestamp = Date.now();
     const testScores = userTestAnswers.map((answer, index) =>
       getQuestionAnswerScore(index + 1, answer)
@@ -95,7 +114,7 @@ export default function TestQuestion() {
           duration: 2000,
           isClosable: true,
         });
-        
+
         // Clear user answers after successful save
         setUserTestAnswers([]);
         // Navigate to result page
@@ -105,7 +124,7 @@ export default function TestQuestion() {
       }
     } catch (error) {
       console.error("Error saving test result:", error);
-      
+
       toast({
         title: "Error saving results",
         description: "There was a problem saving your test results. Please try again.",
@@ -130,8 +149,11 @@ export default function TestQuestion() {
       maxW="2xl"
       mx="auto"
     >
-      <TestProgress currentQuestionIndex={currentPersonalityTestIndex} />
-      
+      <TestProgress
+        currentQuestionIndex={currentPersonalityTestIndex}
+        onGoToQuestion={handleGoToQuestion}
+      />
+
       <Flex
         direction="column"
         textAlign="center"
@@ -157,7 +179,7 @@ export default function TestQuestion() {
           {personalityTest[currentPersonalityTestIndex].question}
         </Text>
       </Flex>
-      
+
       <Flex
         w="full"
         gap={3}
@@ -183,7 +205,7 @@ export default function TestQuestion() {
           }
         )}
       </Flex>
-      
+
       <Flex
         direction="row"
         w="full"
@@ -204,39 +226,27 @@ export default function TestQuestion() {
         >
           Previous
         </Button>
-        
-        {isUserAlreadyPickAnswer &&
-        currentPersonalityTestIndex === personalityTest.length - 1 ? (
+
+        {currentPersonalityTestIndex === personalityTest.length - 1 ? (
           <Button
             w="full"
-            colorScheme="primary"
+            colorScheme="green"
+            size="lg"
+            fontWeight="bold"
+            fontSize="lg"
+            boxShadow="lg"
+            _hover={{
+              transform: "scale(1.05)",
+              boxShadow: "xl",
+            }}
+            transition="all 0.2s"
             onClick={handleSeeResultButtonClick}
             isLoading={isSubmitting}
             loadingText="Saving Results..."
-            _hover={{
-              transform: isSubmitting ? "none" : "translateY(-2px)",
-              shadow: isSubmitting ? "none" : "lg",
-            }}
-            transition="all 0.2s"
-            size="lg"
           >
-            See Result
+            🎉 Finish Test!
           </Button>
-        ) : (
-          <Button
-            w="full"
-            colorScheme="primary"
-            isDisabled={!isUserAlreadyPickAnswer}
-            onClick={handleNextButtonClick}
-            _hover={{
-              transform: !isUserAlreadyPickAnswer ? "none" : "translateY(-2px)",
-              shadow: !isUserAlreadyPickAnswer ? "none" : "md",
-            }}
-            transition="all 0.2s"
-          >
-            Next
-          </Button>
-        )}
+        ) : null}
       </Flex>
     </Flex>
   );

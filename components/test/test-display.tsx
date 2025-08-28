@@ -27,18 +27,18 @@ export default function TestDisplay() {
         <TestMenu
           onShowInstructionsButtonClick={handleShowInstructionsButtonClick}
         />
-        
+
         <Box flex="1" position="relative">
           <Fade in={showTestInstructions} unmountOnExit>
-            <Box position="absolute" w="full" h="full">
+            <Box position="absolute" w="full" h="full" zIndex={10}>
               <TestInstructions
                 onCloseTestInstructions={handleCloseTestInstructions}
               />
             </Box>
           </Fade>
-          
+
           <Fade in={!showTestInstructions} unmountOnExit>
-            <Box position="absolute" w="full" h="full">
+            <Box position="absolute" w="full" h="full" zIndex={5}>
               <TestQuestion />
             </Box>
           </Fade>

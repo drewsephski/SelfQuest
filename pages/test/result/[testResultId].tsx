@@ -1,14 +1,29 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Flex, Show, Text } from "@chakra-ui/react";
+import {
+  Flex,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
+} from "@chakra-ui/react";
 
 import MainLayout from "../../../components/layouts/main-layout";
-import TestResult from "../../../components/test/test-result";
-import TestResultTableOfContent from "../../../components/test/test-result-table-of-content";
+import TestResultOverview from "../../../components/test/TestResultOverview";
+import TestResultTraits from "../../../components/test/TestResultTraits";
+import TestResultRelationships from "../../../components/test/TestResultRelationships";
+import TestResultChallenges from "../../../components/test/TestResultChallenges";
+import TestResultGrowth from "../../../components/test/TestResultGrowth";
+import TestResultChart from "../../../components/test/test-result-chart";
+import TestResultShare from "../../../components/test/test-result-share";
 import TestResultStats from "../../../components/test/test-result-stats";
+import { getPersonalityClassGroupByTestScores } from "../../../lib/personality-test";
 import {
   TestResult as ITestResult,
   getSavedTestResult,
+  getAllSavedTestResult,
 } from "../../../lib/personality-test";
 
 export default function TestResultPage() {
@@ -31,6 +46,19 @@ export default function TestResultPage() {
     }
   }, [router.isReady, router.query.testResultId]);
 
+  useEffect(() => {
+    getAllSavedTestResult().then((results) => {
+      if (results.success && results.data) {
+        console.log("All saved test results:", results.data);
+      }
+    });
+  }, []);
+
+  const personalityClassGroup = testResult.data?.data
+    ? getPersonalityClassGroupByTestScores(testResult.data.data.testScores)
+    : undefined;
+  const personalityType = personalityClassGroup; // Renaming for clarity as per new components
+
   return (
     <MainLayout>
       {testResult.status === "not-asked" && <Text>Loading</Text>}
@@ -42,20 +70,61 @@ export default function TestResultPage() {
           )}
           {testResult.data.success && (
             <>
-              {testResult.data.data ? (
-                <Flex
-                  h="full"
-                  direction={{
-                    base: "column",
-                    lg: "row",
-                  }}
-                >
-                  <TestResultStats testResult={testResult.data.data} />
-                  <TestResult testResult={testResult.data.data} />
-                  <Show above="lg">
-                    <TestResultTableOfContent />
-                  </Show>
-                </Flex>
+              {testResult.data.data && personalityClassGroup && personalityType ? (
+                <Tabs mt={16}>
+                  <TabList justifyContent="center" mb={16} mx="auto">
+                    <Tab>Overview</Tab>
+                    <Tab>Traits & Gifts</Tab>
+                    <Tab>Relationships</Tab>
+                    <Tab>Challenges & Solutions</Tab>
+                    <Tab>Growth & Success</Tab>
+                    <Tab>Stats</Tab>
+                    <Tab>Chart</Tab>
+                    <Tab>Share</Tab>
+                  </TabList>
+
+                  <TabPanels>
+                    <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
+                      <TestResultOverview
+                        personalityClassGroup={personalityClassGroup}
+                        personalityType={personalityType}
+                      />
+                    </TabPanel>
+                    <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
+                      <TestResultTraits
+                        personalityClassGroup={personalityClassGroup}
+                        personalityType={personalityType}
+                      />
+                    </TabPanel>
+                    <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
+                      <TestResultRelationships
+                        personalityClassGroup={personalityClassGroup}
+                        personalityType={personalityType}
+                      />
+                    </TabPanel>
+                    <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
+                      <TestResultChallenges
+                        personalityClassGroup={personalityClassGroup}
+                        personalityType={personalityType}
+                      />
+                    </TabPanel>
+                    <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
+                      <TestResultGrowth
+                        personalityClassGroup={personalityClassGroup}
+                        personalityType={personalityType}
+                      />
+                    </TabPanel>
+                    <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
+                      <TestResultStats testResult={testResult.data.data} />
+                    </TabPanel>
+                    <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
+                      <TestResultChart testResult={testResult.data.data} />
+                    </TabPanel>
+                    <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
+                      <TestResultShare url={window.location.href} />
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
               ) : (
                 <Text>No Data</Text>
               )}

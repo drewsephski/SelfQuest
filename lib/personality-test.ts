@@ -25,6 +25,7 @@ export interface PersonalityClass {
     | Perceiving
     | Judging;
   description: string;
+  brief: string;
 }
 
 export interface PersonalityClassGroup {

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
-import { Flex, Container } from "@chakra-ui/react";
+import { Box, Flex, Container } from "@chakra-ui/react";
 import Nav from "../common/nav";
 import Footer from "../common/footer";
 
@@ -11,8 +11,8 @@ interface MainLayoutProps {
   description?: string;
 }
 
-export default function MainLayout({ 
-  children, 
+export default function MainLayout({
+  children,
   title = "MBTI Personality Test",
   description = "Discover your personality type with our comprehensive MBTI personality test. Learn about your strengths, preferences, and how you interact with the world."
 }: MainLayoutProps) {
@@ -42,21 +42,23 @@ export default function MainLayout({
         <meta property="twitter:description" content={description} />
       </Head>
       
-      <Flex direction="column" minH={isResultsPage ? "auto" : "100vh"}>
+      <Flex direction="column" minH="100vh">
         <Nav />
         <Container
           as="main"
           maxW="container.xl"
-          flex={isResultsPage ? "none" : "1"}
+          flex="1"
           display="flex"
-          alignItems={isResultsPage ? "flex-start" : "center"}
-          justifyContent={isResultsPage ? "flex-start" : "center"}
-          py={isResultsPage ? { base: 4, md: 8 } : 8}
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          py={{ base: 4, md: 8 }}
         >
           {children}
         </Container>
         <Footer />
       </Flex>
     </>
-  );
+    );
 }
+    
