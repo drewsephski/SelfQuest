@@ -1,0 +1,27 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="256" cy="256" r="240" fill="#3498db" stroke="#2980b9" stroke-width="32"/>
+
+  <!-- Brain/mind outline -->
+  <path d="M156 232c0-20 16-36 36-36h24v-12c0-33 27-60 60-60s60 27 60 60v12h24c20 0 36 16 36 36v32c0 20-16 36-36 36h-12v24c0 33-27 60-60 60h-24v24c0 13-10 24-24 24s-24-10-24-24v-24h-24c-33 0-60-27-60-60v-24h-12c-20 0-36-16-36-36v-32z"
+        fill="white" opacity="0.9"/>
+
+  <!-- MBTI letters -->
+  <text x="256" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="120" font-weight="bold" fill="#2c3e50">MBTI</text>
+
+  <!-- Mini personality indicators -->
+  <circle cx="156" cy="200" r="8" fill="#e74c3c"/><!-- E/I -->
+  <circle cx="356" cy="200" r="8" fill="#e74c3c"/><!-- S/N -->
+  <circle cx="156" cy="312" r="8" fill="#e74c3c"/><!-- T/F -->
+  <circle cx="356" cy="312" r="8" fill="#e74c3c"/><!-- J/P -->
+
+  <!-- Personality indicator labels -->
+  <text x="146" y="195" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" font-weight="bold">E</text>
+  <text x="168" y="207" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" font-weight="bold">I</text>
+  <text x="346" y="195" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" font-weight="bold">S</text>
+  <text x="368" y="207" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" font-weight="bold">N</text>
+  <text x="146" y="307" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" font-weight="bold">T</text>
+  <text x="168" y="319" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" font-weight="bold">F</text>
+  <text x="346" y="307" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" font-weight="bold">J</text>
+  <text x="368" y="319" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" font-weight="bold">P</text>
+</svg>
