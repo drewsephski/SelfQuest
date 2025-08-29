@@ -1,4 +1,5 @@
 import Head from "next/head";
+import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { Box, Flex, Container } from "@chakra-ui/react";
@@ -28,7 +29,7 @@ export default function MainLayout({
           name="viewport" 
           content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, shrink-to-fit=no" 
         />
-        <meta name="theme-color" content="#3498db" />
+        <meta name="theme-color" content="#2196F3" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="mobile-web-app-capable" content="yes" />

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import NextLink from "next/link";
 import {
   Heading,
   Text,
@@ -71,7 +71,7 @@ export default function HomePage() {
           </Text>
 
           <VStack spacing={{ base: 3, md: 4 }} align="stretch" w="full" maxW="md" pt={{ base: 1, md: 2 }}>
-            <Link href="/test" passHref>
+            <NextLink href="/test" passHref>
               <Button
                 as="a"
                 size={buttonSize}
@@ -80,20 +80,30 @@ export default function HomePage() {
                 py={{ base: 5, md: 6 }}
                 fontSize={{ base: "md", md: "lg" }}
                 fontWeight="semibold"
+                bgGradient="linear(to-r, neon.400, neon.600)"
                 _hover={{
                   transform: "translateY(-2px)",
-                  boxShadow: "lg"
+                  boxShadow: "xl",
+                  bgGradient: "linear(to-r, neon.500, neon.700)"
                 }}
                 _active={{
-                  transform: "translateY(0)"
+                  transform: "translateY(0)",
+                  bgGradient: "linear(to-r, neon.600, neon.800)"
+                }}
+                _dark={{
+                  bgGradient: "linear(to-r, neon.500, neon.700)",
+                  _hover: {
+                    bgGradient: "linear(to-r, neon.600, neon.800)"
+                  }
                 }}
                 transition="all 0.2s"
+                color="white"
               >
                 Start Free Test
               </Button>
-            </Link>
+            </NextLink>
             
-            <Link href="#learn-more" passHref>
+            <NextLink href="#learn-more" passHref>
               <Button
                 as="a"
                 size={buttonSize}
@@ -107,7 +117,7 @@ export default function HomePage() {
               >
                 Learn More
               </Button>
-            </Link>
+            </NextLink>
           </VStack>
         </VStack>
 

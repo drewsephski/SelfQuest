@@ -67,9 +67,14 @@ export default function TestInstructions(props: TestInstructionsProps) {
       </Flex>
       <Button
         w="full"
-        colorScheme="primary"
+        colorScheme="gray"
+        variant="outline"
         onClick={props.onCloseTestInstructions}
         size="lg"
+        rounded="lg"
+        _hover={{ bg: "gray.600", color: "white" }}
+        _active={{ bg: "gray.700", color: "white" }}
+        transition="background-color 0.2s, color 0.2s"
         mt={4}
       >
         Begin My Journey
