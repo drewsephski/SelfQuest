@@ -18,8 +18,8 @@ export default function TestAnswerOption(props: TestAnswerOptionProps & UseRadio
     <Box w="full" as="label">
       <input {...input} />
       <Box
-        px={6}
-        py={4}
+        px={{ base: 4, md: 6 }}
+        py={{ base: 3, md: 4 }}
         cursor="pointer"
         borderWidth={2}
         borderRadius="lg"
@@ -46,6 +46,7 @@ export default function TestAnswerOption(props: TestAnswerOptionProps & UseRadio
         _active={{
           transform: "translateY(0)",
         }}
+        fontSize={{ base: "sm", md: "md" }}
         {...radio}
       >
         {props.children}

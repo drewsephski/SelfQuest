@@ -8,6 +8,7 @@ import {
   TabPanels,
   Tabs,
   Text,
+  Box,
 } from "@chakra-ui/react";
 
 import MainLayout from "../../../components/layouts/main-layout";
@@ -89,59 +90,82 @@ export default function TestResultPage() {
 
   return (
     <MainLayout>
-      <Tabs mt={16}>
-        <TabList justifyContent="center" mb={16} mx="auto">
-          <Tab>Overview</Tab>
-          <Tab>Traits & Gifts</Tab>
-          <Tab>Relationships</Tab>
-          <Tab>Challenges & Solutions</Tab>
-          <Tab>Growth & Success</Tab>
-          <Tab>Stats</Tab>
-          <Tab>Chart</Tab>
-          <Tab>Share</Tab>
-        </TabList>
+      <Tabs 
+        mt={{ base: 12, md: 16 }}
+        variant="enclosed"
+        isLazy
+        lazyBehavior="keepMounted"
+      >
+        <Flex 
+          width="100%"
+          borderBottom="1px"
+          borderColor="gray.200"
+          mb={4}
+          px={{ base: 4, md: 0 }}
+        >
+          <TabList 
+            flexWrap="wrap"
+            width="100%"
+            gap={1}
+            sx={{
+              '& > button': {
+                whiteSpace: 'nowrap',
+                px: 3,
+                py: 2,
+                fontSize: { base: 'sm', sm: 'md' },
+                _selected: {
+                  color: 'blue.500',
+                  borderBottom: '2px solid',
+                  borderColor: 'blue.500',
+                  mb: '-1px',
+                },
+              },
+            }}
+          >
+            <Tab>Overview</Tab>
+            <Tab>Traits</Tab>
+            <Tab>Relationships</Tab>
+            <Tab>Challenges</Tab>
+            <Tab>Growth</Tab>
+            <Tab>Stats</Tab>
+            <Tab>Chart</Tab>
+            <Tab>Share</Tab>
+          </TabList>
+        </Flex>
 
-        <TabPanels>
-          <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
-            <TestResultOverview
-              personalityClassGroup={personalityClassGroup}
-              personalityType={personalityType}
-            />
-          </TabPanel>
-          <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
-            <TestResultTraits
-              personalityClassGroup={personalityClassGroup}
-              personalityType={personalityType}
-            />
-          </TabPanel>
-          <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
-            <TestResultRelationships
-              personalityClassGroup={personalityClassGroup}
-              personalityType={personalityType}
-            />
-          </TabPanel>
-          <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
-            <TestResultChallenges
-              personalityClassGroup={personalityClassGroup}
-              personalityType={personalityType}
-            />
-          </TabPanel>
-          <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
-            <TestResultGrowth
-              personalityClassGroup={personalityClassGroup}
-              personalityType={personalityType}
-            />
-          </TabPanel>
-          <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
-            <TestResultStats testResult={testResult.data.data} />
-          </TabPanel>
-          <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
-            <TestResultChart testResult={testResult.data.data} />
-          </TabPanel>
-          <TabPanel display="flex" flexDirection="column" alignItems="center" justifyContent="center" px={0} py={0}>
-            <TestResultShare url={window.location.href} />
-          </TabPanel>
-        </TabPanels>
+        <Box px={{ base: 4, md: 0 }}>
+          <TabPanels>
+            <TabPanel p={0}>
+              {personalityClassGroup && personalityType && (
+                <TestResultOverview 
+                  personalityClassGroup={personalityClassGroup} 
+                  personalityType={personalityType} 
+                />
+              )}
+            </TabPanel>
+            <TabPanel p={0}>
+              <TestResultTraits personalityClassGroup={personalityClassGroup} personalityType={personalityType} />
+            </TabPanel>
+            <TabPanel p={0}>
+              <TestResultRelationships personalityClassGroup={personalityClassGroup} personalityType={personalityType} />
+            </TabPanel>
+            <TabPanel p={0}>
+              <TestResultChallenges personalityClassGroup={personalityClassGroup} personalityType={personalityType} />
+            </TabPanel>
+            <TabPanel p={0}>
+              <TestResultGrowth personalityClassGroup={personalityClassGroup} personalityType={personalityType} />
+            </TabPanel>
+            <TabPanel p={0}>
+              <TestResultStats testResult={testResult.data?.data} />
+            </TabPanel>
+            <TabPanel p={0}>
+              <TestResultChart testResult={testResult.data?.data} />
+            </TabPanel>
+            <TabPanel p={0}>
+              <TestResultShare url={typeof window !== 'undefined' ? window.location.href : ''} />
+            </TabPanel>
+          </TabPanels>
+        </Box>
       </Tabs>
     </MainLayout>
   );

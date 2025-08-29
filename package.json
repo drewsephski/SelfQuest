@@ -9,7 +9,9 @@
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "generate-icons": "node scripts/generate-icons.js",
+    "postinstall": "npm run generate-icons"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.10.4",

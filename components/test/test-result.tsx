@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Flex } from "@chakra-ui/react";
 
 import {
@@ -16,7 +15,16 @@ export default function TestResult(props: TestResultProps) {
   );
 
   return (
-    <Flex my={4} w="full" h="full" px={8} gap={4} alignItems="center" direction="column">
+    <Flex 
+      my={4} 
+      w="full" 
+      h="full" 
+      px={{ base: 4, md: 8 }} 
+      gap={{ base: 2, md: 4 }} 
+      alignItems="center" 
+      direction="column"
+      overflowX="hidden"
+    >
       {/* All content moved to new components */}
     </Flex>
   );

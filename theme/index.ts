@@ -79,10 +79,16 @@ const theme = extendTheme({
         "--neon-blue-800": "#1e40af",
         "--neon-blue-900": "#1e3a8a",
       },
+      html: {
+        // Prevent horizontal scrolling issues
+        overflowX: "hidden",
+      },
       body: {
         bg: "background.primary",
         color: "text.primary",
         transition: "background-color 0.2s, color 0.2s",
+        // Ensure body also respects overflow
+        overflowX: "hidden",
       },
     },
   },

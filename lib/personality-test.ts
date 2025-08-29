@@ -63,6 +63,7 @@ export interface PersonalityClassGroup {
 }
 
 export interface TestResult {
+  id: any;
   timestamp: number;
   testAnswers: TestAnswerOption["type"][];
   testScores: PersonalityClass["type"][];

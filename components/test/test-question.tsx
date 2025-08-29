@@ -139,10 +139,10 @@ export default function TestQuestion({}: TestQuestionProps) {
 
   return (
     <Flex
-      py={6}
+      py={{ base: 4, md: 6 }}
       w="full"
       h="full"
-      gap={1}
+      gap={{ base: 4, md: 1 }}
       direction="column"
       justifyContent="space-between"
       alignItems="center"
@@ -157,11 +157,11 @@ export default function TestQuestion({}: TestQuestionProps) {
       <Flex
         direction="column"
         textAlign="center"
-        gap={2}
-        px={4}
+        gap={{ base: 1, md: 2 }}
+        px={{ base: 2, md: 4 }}
       >
         <Text
-          fontSize="sm"
+          fontSize={{ base: "xs", md: "sm" }}
           fontWeight="semibold"
           color="primary.500"
           textTransform="uppercase"
@@ -170,7 +170,7 @@ export default function TestQuestion({}: TestQuestionProps) {
           Question {currentPersonalityTestIndex + 1} of {personalityTest.length}
         </Text>
         <Text
-          fontSize={{ base: "xl", md: "2xl" }}
+          fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
           fontWeight="medium"
           lineHeight="shorter"
           color="gray.700"
@@ -182,9 +182,9 @@ export default function TestQuestion({}: TestQuestionProps) {
 
       <Flex
         w="full"
-        gap={3}
+        gap={{ base: 2, md: 3 }}
         direction="column"
-        px={4}
+        px={{ base: 2, md: 4 }}
         {...group}
       >
         {personalityTest[currentPersonalityTestIndex].answerOptions.map(
@@ -206,8 +206,8 @@ export default function TestQuestion({}: TestQuestionProps) {
       <Flex
         direction="row"
         w="full"
-        gap={4}
-        px={4}
+        gap={{ base: 2, md: 4 }}
+        px={{ base: 2, md: 4 }}
       >
         <Button
           w="full"
@@ -220,6 +220,9 @@ export default function TestQuestion({}: TestQuestionProps) {
             shadow: "md",
           }}
           transition="all 0.2s"
+          fontSize={{ base: "sm", md: "md" }}
+          py={{ base: 2, md: "auto" }}
+          h={{ base: 10, md: "auto" }}
         >
           Previous
         </Button>
@@ -228,9 +231,9 @@ export default function TestQuestion({}: TestQuestionProps) {
           <Button
             w="full"
             colorScheme="green"
-            size="lg"
+            size={{ base: "md", md: "lg" }}
             fontWeight="bold"
-            fontSize="lg"
+            fontSize={{ base: "md", md: "lg" }}
             boxShadow="lg"
             _hover={{
               transform: "scale(1.05)",
@@ -240,6 +243,8 @@ export default function TestQuestion({}: TestQuestionProps) {
             onClick={handleSeeResultButtonClick}
             isLoading={isSubmitting}
             loadingText="Saving Results..."
+            py={{ base: 2, md: "auto" }}
+            h={{ base: 10, md: "auto" }}
           >
             🎉 Finish Test!
           </Button>

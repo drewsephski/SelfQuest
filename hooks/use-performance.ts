@@ -1,23 +1,24 @@
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 /**
  * Hook to optimize performance by preloading critical routes
  */
 export function usePerformanceOptimization() {
+    const router = useRouter();
+    
     useEffect(() => {
-        // Preload critical routes
-        if (typeof window !== 'undefined') {
-            const router = require('next/router').default;
+        // Only run on client-side
+        if (typeof window === 'undefined') return;
 
-            // Preload test route after a short delay
-            const timer = setTimeout(() => {
-                router.prefetch('/test');
-                router.prefetch('/test/result/history');
-            }, 2000);
+        // Preload critical routes after a short delay
+        const timer = setTimeout(() => {
+            router.prefetch('/test');
+            router.prefetch('/test/result/history');
+        }, 2000);
 
-            return () => clearTimeout(timer);
-        }
-    }, []);
+        return () => clearTimeout(timer);
+    }, [router]);
 }
 
 /**
@@ -25,27 +26,24 @@ export function usePerformanceOptimization() {
  */
 export function useWebVitals() {
     useEffect(() => {
-        if (typeof window !== 'undefined' && 'performance' in window) {
-            // Track performance metrics
-            const observer = new PerformanceObserver((list) => {
-                list.getEntries().forEach((entry) => {
-                    // You can send these metrics to your analytics service
-                    if ('value' in entry) {
-                        console.log(`${entry.name}: ${entry.value}`);
-                    } else {
-                        console.log(`${entry.name}:`, entry);
-                    }
-                });
+        // Only run on client-side
+        if (typeof window === 'undefined' || !('performance' in window)) return;
+        
+        const observer = new PerformanceObserver((list) => {
+            list.getEntries().forEach((entry) => {
+                if ('value' in entry) {
+                    console.log(`${entry.name}: ${entry.value}`);
+                } else {
+                    console.log(`${entry.name}:`, entry);
+                }
             });
+        });
 
-            try {
-                observer.observe({ entryTypes: ['measure', 'navigation'] });
-            } catch (e) {
-                // Fallback for browsers that don't support all entry types
-                console.warn('Performance observer not fully supported');
-            }
-
+        try {
+            observer.observe({ entryTypes: ['measure', 'navigation'] });
             return () => observer.disconnect();
+        } catch (e) {
+            console.warn('Performance observer not fully supported', e);
         }
     }, []);
 }

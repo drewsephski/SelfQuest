@@ -24,12 +24,17 @@ export default function MainLayout({
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta 
+          name="viewport" 
+          content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, shrink-to-fit=no" 
+        />
         <meta name="theme-color" content="#3498db" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="MBTI Test" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -42,23 +47,19 @@ export default function MainLayout({
         <meta property="twitter:description" content={description} />
       </Head>
       
-      <Flex direction="column" minH="100vh">
+      <Flex direction="column" minH="100vh" maxW="100vw" overflowX="hidden">
         <Nav />
-        <Container
-          as="main"
-          maxW="container.xl"
-          flex="1"
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-          py={{ base: 4, md: 8 }}
-        >
-          {children}
-        </Container>
+        <Box flex="1" w="full" as="main">
+          <Container
+            maxW="container.lg"
+            px={{ base: 4, sm: 6 }}
+            py={{ base: 4, md: 6 }}
+          >
+            {children}
+          </Container>
+        </Box>
         <Footer />
       </Flex>
     </>
-    );
+  );
 }
-    
